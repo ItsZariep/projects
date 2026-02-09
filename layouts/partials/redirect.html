@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>{{ .Title }}</title>
+	<meta http-equiv="refresh" content="0; url={{ .Params.redirect }}">
+	<link rel="canonical" href="{{ .Params.redirect }}">
+	<meta name="robots" content="noindex">
+</head>
+
+<body>
+
+	<h1>{{ .Title }}</h1>
+
+	<p>
+		Redirecting to
+		<a href="{{ .Params.redirect }}">{{ .Params.redirect }}</a>…
+	</p>
+
+	<p>
+		If you are not redirected automatically,
+		<a href="{{ .Params.redirect }}">click here</a>.
+	</p>
+
+</body>
+</html>

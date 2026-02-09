@@ -1,0 +1,15 @@
+<div id="right-container">
+
+	{{ $feed := "" }}
+
+	<div class="rss-widget">
+		{{ if ne .Type "projects" }}
+			{{ $feed = "https://codeberg.org/api/v1/users/itszariep/activities/feeds" }}
+		{{ else }}
+			{{ $feed = printf "https://codeberg.org/api/v1/repos/ItsZariep/%s/activities/feeds" .File.BaseFileName }}
+		{{ end }}
+
+		{{ partial "rss.html" $feed }}
+	</div>
+</div>
+</script>

@@ -1,0 +1,9 @@
+{{/* slug = repo/page name */}}
+{{ $slug := .File.TranslationBaseName }}
+
+<script type="module" src="https://cdn.jsdelivr.net/npm/zero-md@3?register"></script>
+<zero-md src="https://codeberg.org/api/v1/repos/itszariep/{{ $slug }}/raw/README.md">
+	<template data-append>
+		<link rel="stylesheet" href="{{ "css/md.css" | relURL }}">
+	</template>
+</zero-md>

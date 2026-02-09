@@ -1,0 +1,54 @@
+{{ $repo := .Page.File.TranslationBaseName }}
+
+{{ $class := .class | default "badges" }}
+{{ $showReleases := .show_releases | default 1 }}
+
+{{ $issueslabel := "" }}
+{{ $sourcelabel := "" }}
+{{ $releaseslabel := "" }}
+
+{{ if eq $class "badgesb" }}
+	{{ $issueslabel = "Issues" }}
+	{{ $sourcelabel = "Source%20Code" }}
+	{{ $releaseslabel = "Releases&" }}
+{{ end }}
+
+<div class="{{ $class }} badges-flex">
+
+{{ if .Page.IsHome }}
+
+	<a href="https://codeberg.org/itszariep/pages">
+		<img
+			title="Codeberg: ItsZariep/pages"
+			src="https://badgers.space/badge/%20/Code%20of%20this%20page?icon=feather-code&label=&theme=badgen&color=6677a6">
+	</a>
+
+{{ else }}
+	{{ $page := .Page }}
+	{{ $repo := $page.File.TranslationBaseName }}
+	{{ $title := $page.Title }}
+
+{{ if $showReleases }}
+<a href="https://codeberg.org/ItsZariep/{{ $repo }}/releases">
+	<img
+		title="ItsZariep/{{ $title }} Releases"
+		src="https://badgers.space/codeberg/release/ItsZariep/{{ lower $repo }}?label=Releases&icon=feather-download&color=91a666&theme=badgen">
+</a>
+{{ end }}
+
+
+
+	<a href="https://codeberg.org/ItsZariep/{{ $repo }}">
+		<img
+			title="ItsZariep/{{ $title }}"
+			src="https://badgers.space/codeberg/stars/ItsZariep/{{ lower $repo }}?label=Source%20Code&icon=cssgg-code&color=66a6aa&theme=badgen">
+	</a>
+
+	<a href="https://codeberg.org/ItsZariep/{{ $repo }}/issues">
+		<img
+			title="ItsZariep/{{ $title }} Issues"
+			src="https://badgers.space/codeberg/open-issues/ItsZariep/{{ lower $repo }}?label=Issues&icon=cssgg-debug&color=a66966&theme=badgen">
+	</a>
+{{ end }}
+
+</div>

@@ -1,0 +1,77 @@
+{{ $indextype := .Params.indextype }}
+
+{{ if eq $indextype "chapters" }}
+	<!-- Chapters section -->
+
+	{{ $chapters := where .Site.RegularPages "Section" "projects" }}
+	{{ $grouped := dict }}
+
+	{{/* Group projects by section */}}
+	{{ range $chapters }}
+		{{ $section := .Params.section | default "Uncategorized" }}
+		{{ $existing := index $grouped $section }}
+
+		{{ if $existing }}
+			{{ $existing = $existing | append . }}
+		{{ else }}
+			{{ $existing = slice . }}
+		{{ end }}
+
+		{{ $grouped = merge $grouped (dict $section $existing) }}
+	{{ end }}
+
+	{{/* Convert map → sortable slice */}}
+	{{ $sections := slice }}
+	{{ range $section, $items := $grouped }}
+		{{ $sections = $sections | append (dict
+			"name" $section
+			"items" $items
+			"count" (len $items)
+		) }}
+	{{ end }}
+
+	{{/* Sort by number of projects (descending) */}}
+	{{ $sections = sort $sections "count" "desc" }}
+
+	<div class="chapters-container">
+
+		{{/* Render sorted sections */}}
+		{{ range $sections }}
+
+			<h1>{{ .name }}</h1>
+
+			<div class="posts-container">
+				{{ range sort .items "Params.order" }}
+					<a href="{{ .RelPermalink }}" title="{{ .Params.description | default .Title }}">
+						<article class="post-card">
+
+							<div class="post-image-wrapper">
+								{{ $slug := .Title | urlize }}
+								{{ $autoImage := printf "/assets/projects/%s/%s.webp" $slug $slug }}
+								{{ $image := .Params.image | default $autoImage }}
+
+								<img src="{{ $image | relURL }}" alt="{{ .Title }}" class="post-image" />
+							</div>
+
+							<div class="post-info">
+								<h2 class="post-title">{{ .Title }}</h2>
+							</div>
+
+						</article>
+					</a>
+				{{ end }}
+			</div>
+
+		{{ end }}
+
+	</div>
+
+{{ else }}
+	<!-- Fallback content -->
+	<div style="grid-column: 1 / -1;">
+		<p>No content found for this page type. Please make sure you defined 
+			<code class="language-plaintext highlighter-rouge">indextype: posts</code>
+			or <code class="language-plaintext highlighter-rouge">indextype: chapters</code>.
+		</p>
+	</div>
+{{ end }}

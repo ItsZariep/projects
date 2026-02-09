@@ -1,0 +1,293 @@
+@media (prefers-color-scheme: light) {
+	:root {
+		--bg: #eee;
+		--fg: #2a2a2a;
+		--black: #d6d6d6;
+		--grey1: #444;
+		--fg2: #5f713a;
+	}
+}
+
+.rss-widget {
+	width: 95%;
+	max-width: 95%;
+	margin-inline: auto;
+	box-sizing: border-box;
+}
+
+/* --- Header & Cards --- */
+
+.rss-widget .post-card a,
+.repo-link,
+.owner-link {
+	text-decoration: none;
+	color: inherit;
+}
+
+.rss-widget .post-card h1 {
+	font-size: 1rem;
+	padding: 1rem;
+}
+
+/* --- Commit Table Layout --- */
+
+.rss-widget .commit-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 1rem;
+	table-layout: fixed;
+	overflow: hidden;
+}
+
+.rss-widget .commit-table td {
+	vertical-align: top;
+	padding: 0.5rem;
+	word-wrap: break-word;
+	overflow-wrap: anywhere;
+	white-space: normal;
+}
+
+/* --- Images --- */
+
+.rss-widget img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+.rss-widget .commit-table img {
+	width: 48px;
+	height: 48px;
+	border-radius: 6px;
+}
+
+/* --- Typography --- */
+
+.rss-widget h2 {
+	font-size: 1rem;
+	margin: 0 0 0.25rem;
+}
+
+.rss-widget h3 {
+	font-size: 0.7rem;
+	margin: 0.25rem 0;
+}
+
+.rss-widget h4 {
+	margin: 0.25rem 0;
+	font-family: monospace;
+	font-size: 0.7rem;
+}
+
+.rss-widget p {
+	margin: 0.25rem 0;
+	opacity: 0.85;
+}
+
+.commit-title {
+	font-weight: bold;
+	text-decoration: none;
+	padding: 5px;
+	border-radius: 6px;
+}
+
+.commit-title a {
+	color: var(--fg2);
+}
+
+/* --- Dividers & Buttons --- */
+
+.rss-widget hr {
+	border: none;
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	margin: 0.5rem 0;
+}
+
+.commit-date-button {
+	display: inline-block;
+	margin-top: 8px;
+	padding: 6px 10px;
+	font-size: 0.85rem;
+	border-radius: 6px;
+	text-decoration: none;
+	opacity: 0.8;
+	color: var(--fg);
+}
+
+.commit-card {
+	background: var(--black);
+	border-radius: 14px;
+	padding: 16px;
+	margin-bottom: 16px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	display: grid;
+	gap: 12px;
+}
+
+.commit-user,
+.repo-owner,
+.repo-owner-container,
+.owner-link {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.repo-owner img {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+}
+
+.owner-avatar {
+	width: 2rem;
+	height: 2rem;
+	border-radius: 4px;
+	vertical-align: middle;
+}
+
+.commit-content h2 {
+	margin: 0;
+	font-size: 1.1rem;
+}
+
+.commit-content hr {
+	opacity: 0.2;
+	margin: 6px 0;
+}
+
+.commit-description {
+	margin-top: 8px;
+	opacity: 0.9;
+}
+
+.repo-header {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.owner-link:hover,
+.repo-link:hover {
+	text-decoration: underline;
+}
+
+/* ===== Layout Containers ===== */
+
+.chapters-container {
+	width: 90%;
+	display: grid;
+	gap: 1rem;
+	padding: 0 2vw;
+}
+
+.chapters-container h1 {
+	margin: 0;
+}
+
+.search-box {
+	margin: auto;
+}
+
+/* --- Media --- */
+
+.post-image {
+	object-fit: contain;
+}
+
+.post-image-wrapper {
+	padding-top: 25%;
+	margin-top: 1rem;
+}
+
+.gallery {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 16px;
+		width: 100%;
+}
+
+.gallery img {
+		max-width: 30%;
+		max-height: 512px;
+		object-fit: contain;
+}
+
+.plogo {
+	max-width: 10vw;
+}
+
+/* --- Global Elements --- */
+
+hr {
+	width: 90%;
+}
+
+.post-title {
+	text-align: center;
+}
+
+/* ===== Badges ===== */
+
+.badges {
+	all: unset;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 64px;
+	white-space: pre-wrap;
+}
+
+.badges img {
+	transform: scale(1.5);
+	transition: transform 0.3s ease;
+}
+
+.badges img:hover {
+	transform: scale(1.7);
+}
+
+.badges-flex {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.badges-flex a {
+	display: inline-flex;
+}
+
+
+/*
+2 columns patch*/
+
+
+.posts-container {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.post-card {
+	flex-direction: row;
+}
+.post-image-wrapper {
+		padding-top: inherit;
+		margin: 0.5rem;
+		width: 64px;
+}
+
+.post-image {
+	width: unset;
+}
+
+@media (max-width: 768px) {
+
+
+	.rss-widget .header-upt {
+			margin-top: 2rem;
+	}
+
+	.posts-container {
+		grid-template-columns: 1fr;
+	}
+}
