@@ -1,3 +1,8 @@
+:root {
+		--cbbg: #111;
+		--cbfg: #aaa;
+}
+
 @media (prefers-color-scheme: light) {
 	:root {
 		--bg: #eee;
@@ -5,6 +10,8 @@
 		--black: #d6d6d6;
 		--grey1: #444;
 		--fg2: #5f713a;
+		--cbbg: #444;
+		--cbfg: #eee;
 	}
 }
 
