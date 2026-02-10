@@ -1,6 +1,7 @@
 :root {
 		--cbbg: #111;
 		--cbfg: #aaa;
+		--fg2: #91a666;
 }
 
 @media (prefers-color-scheme: light) {
@@ -13,6 +14,27 @@
 		--cbbg: #444;
 		--cbfg: #eee;
 	}
+}
+
+/* zero-md overflow fixes */
+zero-md {
+	display: block;
+	max-width: 100%;
+	overflow-x: hidden;
+	box-sizing: border-box;
+}
+
+/* Constrain its container */
+.content {
+	max-width: 100%;
+	overflow-x: hidden;
+	box-sizing: border-box;
+}
+
+.chapters-container {
+	max-width: 100%;
+	overflow-x: hidden;
+	box-sizing: border-box;
 }
 
 .rss-widget {

@@ -1,3 +1,35 @@
+:host {
+	display: block;
+	max-width: 100%;
+	overflow-x: hidden;
+	box-sizing: border-box;
+}
+
+.markdown-body {
+	max-width: 100%;
+	overflow-x: hidden;
+	box-sizing: border-box;
+	width: 100%;
+}
+
+table {
+	display: block;
+	max-width: 100%;
+	overflow-x: auto;
+	box-sizing: border-box;
+}
+
+pre {
+	max-width: 100%;
+	overflow-x: auto;
+	box-sizing: border-box;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
 .markdown-body .octicon {
 	display: flex;
 	fill: currentColor;
@@ -70,6 +102,7 @@
 	border-radius: 24px;
 	padding: 24px;
 	color: var(--fg) !important;
+	overflow-x: hidden;
 }
 
 .markdown-body details {
@@ -102,6 +135,8 @@
 
 .markdown-body img {
 	border-style: none;
+	max-width: 100%;
+	height: auto;
 }
 
 .markdown-body .zero-md-copy {
@@ -142,10 +177,13 @@
 	border-top: none;
 	border-right: none;
 	border-bottom: none;
-	background-color: #1f1f1f;
 	padding: 6px;
 	border-radius: 6px;
 	text-align: left;
+}
+
+.markdown-alert.markdown-alert-note, blockquote{
+	background-color: var(--cbbg);
 }
 
 .markdown-alert.markdown-alert-warning {
@@ -194,15 +232,22 @@
 	background-color: var(--bg);
 }
 
+.markdown-body input[type="checkbox"]:checked {
+	background-color: transparent; /* Ensures the box doesn't hide the tick */
+	position: relative;
+}
+
 .markdown-body input[type="checkbox"]:checked::after {
-	content: "\ea5e";
-	font-family: 'TablerIcons';
+	content: "✓";
+	font-size: 1.5rem !important;
 	color: var(--fg2);
+	display: block;
 	font-size: 1rem;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	pointer-events: none;
 }
 
 .markdown-body * {
@@ -250,6 +295,7 @@
 .markdown-body table {
 	border-spacing: 0;
 	border-collapse: collapse;
+	overflow-x: auto;
 }
 
 .markdown-body td,
@@ -325,7 +371,7 @@
 }
 
 .markdown-body .markdown-alert > :last-child {
-	color: var(--black);
+	color: var(--cbfg);
 }
 
 .markdown-body blockquote {
@@ -364,6 +410,9 @@
 .markdown-body pre {
 	margin-top: 0;
 	margin-bottom: 0;
+	max-width: 100%;
+	overflow-x: auto;
+	box-sizing: border-box;
 }
 
 .markdown-body input::-webkit-inner-spin-button,

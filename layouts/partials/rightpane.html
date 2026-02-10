@@ -1,15 +1,19 @@
-<div id="right-container">
+<div id="right-container" class="{{ if and (eq .Type "page") (not .IsHome) }}hidden{{ end }}">
 
-	{{ $feed := "" }}
+	{{ if not (and (eq .Type "page") (not .IsHome)) }}
 
-	<div class="rss-widget">
-		{{ if ne .Type "projects" }}
-			{{ $feed = "https://codeberg.org/api/v1/users/itszariep/activities/feeds" }}
-		{{ else }}
-			{{ $feed = printf "https://codeberg.org/api/v1/repos/ItsZariep/%s/activities/feeds" .File.BaseFileName }}
-		{{ end }}
+		{{ $feed := "" }}
 
-		{{ partial "rss.html" $feed }}
-	</div>
+		<div class="rss-widget">
+			{{ if ne .Type "projects" }}
+				{{ $feed = "https://codeberg.org/api/v1/users/itszariep/activities/feeds" }}
+			{{ else }}
+				{{ $feed = printf "https://codeberg.org/api/v1/repos/ItsZariep/%s/activities/feeds" .File.BaseFileName }}
+			{{ end }}
+
+			{{ partial "rss.html" $feed }}
+		</div>
+
+	{{ end }}
+
 </div>
-</script>
