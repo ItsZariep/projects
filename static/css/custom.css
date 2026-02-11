@@ -230,17 +230,17 @@ zero-md {
 }
 
 .gallery {
-		display: flex;
-		justify-content: center;
-		flex-wrap: wrap;
-		gap: 16px;
-		width: 100%;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 16px;
 }
 
 .gallery img {
-		max-width: 30%;
-		max-height: 512px;
-		object-fit: contain;
+	flex: 1 1 25%;
+	max-height: 512px;
+	object-fit: contain;
+	max-width: 100%;
 }
 
 .plogo {
@@ -309,8 +309,13 @@ hr {
 	width: unset;
 }
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) and (max-aspect-ratio: 1 / 1) {
 
+	.gallery img {
+		max-width: 90%;
+		max-height: unset;
+		object-fit: contain;
+	}
 
 	.rss-widget .header-upt {
 			margin-top: 2rem;
