@@ -11,8 +11,8 @@ theme = "Tessera"
     url = "https://codeberg.org/itszariep"
 
   [[params.social_links]]
-    name = "GitHub"
-    url = "https://github.com/itszariep"
+    name = "Ko-fi"
+    url = "https://ko-fi.com/itszariep"
 
   [[params.social_links]]
     name = "Youtube"
