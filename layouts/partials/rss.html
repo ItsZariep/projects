@@ -1,21 +1,20 @@
+{{ $backend := lower (page.Params.repobackend | default site.Params.repobackend | default "codeberg") }}
 {{ $feedURL := . }}
 
-<!-- Styles -->
-<!--
-<link rel="stylesheet" href="{{ "css/updates.css" | relURL }}">
--->
+{{ if eq $backend "github" }}
+    {{/* Extract owner/repo from the Codeberg URL to build the GitHub API URL */}}
+    {{ $repoPath := replaceRE ".*codeberg.org/(api/v1/repos/)?([^/]+/[^/]+).*" "$2" . }}
+    {{ $feedURL = print "https://api.github.com/repos/" $repoPath "/commits" }}
+{{ end }}
 
 <section class="header-upt">
-	<div class="weltext">
-<!--
-		<h1>Recent Activity</h1>
--->
-				<section class="post-card">
-			<a href="{{ $feedURL }}">
-				<h1>Subscribe to feed</h1>
-			</a>
-		</section>
-	</div>
+    <div class="weltext">
+        <section class="post-card">
+            <a href="{{ $feedURL }}">
+                <h1>Subscribe to feed</h1>
+            </a>
+        </section>
+    </div>
 </section>
 
 <br>
@@ -23,96 +22,93 @@
 <div id="commit-feed"></div>
 
 <script>
-async function fetchCommits(url) {
-	try {
-		const response = await fetch(url);
-		const data = await response.json();
-		const container = document.getElementById("commit-feed");
+async function fetchCommits(url, backend) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
+        const data = await response.json();
+        const container = document.getElementById("commit-feed");
+        container.innerHTML = "";
 
-		container.innerHTML = "";
+        let entries = (backend === "github") 
+            ? (Array.isArray(data) ? data : []) 
+            : data.filter(entry => entry.op_type === "commit_repo");
 
-		data
-			.filter(entry => entry.op_type === "commit_repo")
-			.slice(0, 15)
-			.forEach(entry => {
-				const user = entry.act_user;
-				const repo = entry.repo;
-				let content, commits = [];
+        entries.slice(0, 15).forEach(entry => {
+            let commits = [];
+            let repoInfo = {};
 
-				try {
-					content = JSON.parse(entry.content);
-					if (Array.isArray(content?.Commits))
-						commits = content.Commits;
-				} catch {
-					return;
-				}
+            if (backend === "github") {
+                // GitHub Logic
+                const ownerName = url.split('/')[4];
+                const repoName = url.split('/')[5];
+                repoInfo = {
+                    full_name: `${ownerName}/${repoName}`,
+                    owner_avatar: entry.author?.avatar_url || `https://github.com/${ownerName}.png`,
+                };
+                commits = [{
+                    Sha1: entry.sha,
+                    Message: entry.commit?.message || "",
+                    Timestamp: entry.commit?.author?.date,
+                    Url: entry.html_url
+                }];
+            } else {
+                // Codeberg Logic
+                repoInfo = {
+                    full_name: entry.repo.full_name,
+                    owner_avatar: entry.repo.owner?.avatar_url || `https://codeberg.org/user/avatar/${entry.repo.full_name.split('/')[0]}/-1`,
+                };
+                try {
+                    const content = JSON.parse(entry.content);
+                    if (Array.isArray(content?.Commits)) commits = content.Commits;
+                } catch { return; }
+            }
 
-				commits.forEach(commit => {
-					const commitUrl =
-						"https://codeberg.org/" +
-						repo.full_name +
-						"/commit/" +
-						commit.Sha1;
+            commits.forEach(commit => {
+                const [ownerName, repoName] = repoInfo.full_name.split("/");
+                const commitUrl = (backend === "github") 
+                    ? commit.Url 
+                    : `https://codeberg.org/${repoInfo.full_name}/commit/${commit.Sha1}`;
 
-					const lines = (commit.Message || "")
-						.split(/\r?\n+/);
+                const lines = (commit.Message || "").split(/\r?\n+/);
+                const title = lines[0] || "";
+                const body = lines[1] || "";
 
-					const title = lines[0] || "";
-					const body = lines[1] || "";
+                const card = document.createElement("div");
+                card.className = "commit-card";
 
-					const card = document.createElement("div");
-					card.className = "commit-card";
+                // --- Original HTML Layout Restored ---
+                const repoBlock = `
+                <div class="repo-header">
+                    <a href="${backend === 'github' ? 'https://github.com/' : 'https://codeberg.org/'}${ownerName}" target="_blank" class="owner-link">
+                        <img src="${repoInfo.owner_avatar}" alt="${ownerName}'s avatar" class="owner-avatar">
+                        <span class="owner-name">${ownerName}</span>
+                    </a>
+                    <a href="${backend === 'github' ? 'https://github.com/' : 'https://codeberg.org/'}${repoInfo.full_name}" target="_blank" class="repo-link">
+                        <div class="repo-title">${repoName}</div>
+                    </a>
+                </div>`;
 
-					const [ownerName, repoName] = repo.full_name.split("/");
+                const commitBlock = `
+                <div class="commit-content">
+                    <h4 class="commit-title">
+                        <a href="${commitUrl}" target="_blank">${title}</a>
+                    </h4>
+                    ${body ? `<div class="commit-description">${body}</div>` : ""}
+                    <a href="${commitUrl}" class="commit-date-button" target="_blank">
+                        ${new Date(commit.Timestamp || entry.created).toLocaleString()}
+                    </a>
+                </div>`;
 
-					const ownerUrl = `https://codeberg.org/${ownerName}`;
-					const repoUrl = `https://codeberg.org/${repo.full_name}`;
+                card.innerHTML = repoBlock + commitBlock;
+                container.appendChild(card);
+            });
+        });
+    } catch (error) {
+        console.error("Feed error:", error);
+    }
+}
 
-					const ownerAvatar = repo.owner?.avatar_url || `https://codeberg.org/user/avatar/${ownerName}/-1`;
-
-					const repoBlock = `
-					<div class="repo-header">
-							<a href="${ownerUrl}" target="_blank" class="owner-link">
-									<img src="${ownerAvatar}" alt="${ownerName}'s avatar" class="owner-avatar">
-									<span class="owner-name">${ownerName}</span>
-							</a>
-
-							<a href="${repoUrl}" target="_blank" class="repo-link">
-									<div class="repo-title">${repoName}</div>
-							</a>
-					</div>
-					`;
-
-
-					const commitBlock = `
-					<div class="commit-content">
-						<h4 class="commit-title">
-							<a href="${commitUrl}" target="_blank">${title}</a>
-						</h4>
-
-						${
-							body
-								? `<div class="commit-description">${body}</div>`
-								: ""
-						}
-
-						<a href="${commitUrl}" class="commit-date-button" target="_blank">
-							${new Date(
-								commit.Timestamp || entry.created
-							).toLocaleString()}
-						</a>
-					</div>
-					`;
-
-					card.innerHTML = repoBlock + commitBlock;
-					container.appendChild(card);
-
-									});
-								});
-						} catch (error) {
-							console.error("Feed error:", error);
-						}
-					}
-
-					fetchCommits("{{ $feedURL }}");
+fetchCommits("{{ $feedURL }}", "{{ $backend }}");
 </script>

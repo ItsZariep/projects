@@ -1,52 +1,86 @@
+{{ $backend := lower (.Page.Params.RepoBackend | default "codeberg") }}
 {{ $repo := .Page.File.TranslationBaseName }}
-
 {{ $class := .class | default "badges" }}
 {{ $showReleases := .show_releases | default 1 }}
 
-{{ $issueslabel := "" }}
-{{ $sourcelabel := "" }}
-{{ $releaseslabel := "" }}
-
+{{ $sourcelabel := "Source%20Code" }}
 {{ if eq $class "badgesb" }}
-	{{ $issueslabel = "Issues" }}
 	{{ $sourcelabel = "Source%20Code" }}
-	{{ $releaseslabel = "Releases&" }}
+{{ end }}
+
+{{ $base := "" }}
+{{ $badges := "" }}
+
+{{ if eq $backend "github" }}
+	{{ $base = "https://github.com/ItsZariep" }}
+{{ else }}
+	{{ $base = "https://codeberg.org/ItsZariep" }}
 {{ end }}
 
 <div class="{{ $class }} badges-flex">
 
 {{ if .Page.IsHome }}
-
-	<a href="https://codeberg.org/itszariep/pages">
+	<a href="{{ $base }}/pages">
 		<img
-			title="Codeberg: ItsZariep/pages"
+			title="Repository"
 			src="https://badgers.space/badge/%20/Code%20of%20this%20page?icon=feather-code&label=&theme=badgen&color=6677a6">
 	</a>
-
 {{ else }}
-	{{ $page := .Page }}
-	{{ $repo := $page.File.TranslationBaseName }}
-	{{ $title := $page.Title }}
+	{{ $repoName := lower .Page.File.TranslationBaseName }}
 
-{{ if $showReleases }}
-<a href="https://codeberg.org/ItsZariep/{{ $repo }}/releases">
-	<img
-		title="Releases"
-		src="https://badgers.space/codeberg/release/ItsZariep/{{ lower $repo }}?label=Releases&icon=feather-download&color=91a666&theme=badgen">
-</a>
-{{ end }}
-
-	<a href="https://codeberg.org/ItsZariep/{{ $repo }}">
+	{{ if $showReleases }}
+	<a href="{{ $base }}/{{ $repoName }}/releases">
 		<img
-			title="Source Code"
-			src="https://badgers.space/codeberg/stars/ItsZariep/{{ lower $repo }}?label=Source%20Code&icon=cssgg-code&color=66a6aa&theme=badgen">
+			title="Releases"
+			src="https://badgers.space/{{ if eq $backend "github" }}github{{ else }}codeberg{{ end }}/release/ItsZariep/{{ $repoName }}?label=Releases&icon=feather-download&color=91a666&theme=badgen">
 	</a>
+	{{ end }}
 
-	<a href="https://codeberg.org/ItsZariep/{{ $repo }}/issues">
+	{{ if eq $backend "github" }}
+		<a href="{{ $base }}/{{ $repoName }}">
+			<img
+				id="gh-star-{{ $repoName | urlize }}"
+				title="Source Code"
+				data-repo="{{ $repoName }}"
+				data-user="ItsZariep"
+				src="https://badgers.space/badge/Source%20Code/.../66a6aa?icon=github&theme=badgen" 
+				alt="Source Code">
+		</a>
+	{{ else }}
+		<a href="{{ $base }}/{{ $repoName }}">
+			<img
+				title="Source Code"
+				src="https://badgers.space/codeberg/stars/ItsZariep/{{ $repoName }}?label={{ $sourcelabel }}&icon=cssgg-code&color=66a6aa&theme=badgen">
+		</a>
+	{{ end }}
+
+	<a href="{{ $base }}/{{ $repoName }}/issues">
 		<img
 			title="Issues"
-			src="https://badgers.space/codeberg/open-issues/ItsZariep/{{ lower $repo }}?label=Issues&icon=cssgg-debug&color=a66966&theme=badgen">
+			src="https://badgers.space/{{ if eq $backend "github" }}github{{ else }}codeberg{{ end }}/open-issues/ItsZariep/{{ $repoName }}?label=Issues&icon=cssgg-debug&color=a66966&theme=badgen">
 	</a>
-{{ end }}
 
+	{{ if eq $backend "github" }}
+	<script>
+	(function() {
+		const updateStars = async (img) => {
+			const { user, repo } = img.dataset;
+			try {
+				const response = await fetch(`https://api.github.com/repos/${user}/${repo}`);
+				if (!response.ok) return;
+				const data = await response.json();
+				const stars = data.stargazers_count;
+				const display = stars > 999 ? (stars/1000).toFixed(1) + 'k' : stars;
+				img.src = `https://badgers.space/badge/Source%20Code/${display}/66a6aa?icon=github&theme=badgen`;
+			} catch (e) { console.error("GH Star Fetch Error:", e); }
+		};
+
+		document.querySelectorAll('[id^="gh-star-"]').forEach(img => {
+			if (img.dataset.repo) updateStars(img);
+		});
+	})();
+	</script>
+	{{ end }}
+
+{{ end }}
 </div>

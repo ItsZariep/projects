@@ -5,7 +5,7 @@ theme = "Tessera"
 
 [params]
   author = "ItsZariep"
-
+  RepoBackend = "codeberg"
   [[params.social_links]]
     name = "Codeberg"
     url = "https://codeberg.org/itszariep"

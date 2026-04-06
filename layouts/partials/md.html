@@ -1,8 +1,15 @@
-{{/* slug = repo/page name */}}
+{{ $backend := lower (.Page.Params.RepoBackend | default "codeberg") }}
 {{ $slug := .File.TranslationBaseName }}
 
+{{ $rawURL := "" }}
+{{ if eq $backend "github" }}
+	{{ $rawURL = printf "https://raw.githubusercontent.com/itszariep/%s/main/README.md" $slug }}
+{{ else }}
+	{{ $rawURL = printf "https://codeberg.org/api/v1/repos/itszariep/%s/raw/README.md" $slug }}
+{{ end }}
+
 <script type="module" src="https://cdn.jsdelivr.net/npm/zero-md@3?register"></script>
-<zero-md src="https://codeberg.org/api/v1/repos/itszariep/{{ $slug }}/raw/README.md">
+<zero-md src="{{ $rawURL }}">
 	<template data-append>
 		<link rel="stylesheet" href="{{ "css/md.css" | relURL }}">
 	</template>

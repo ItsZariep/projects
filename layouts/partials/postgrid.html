@@ -54,7 +54,12 @@
 							</div>
 
 							<div class="post-info">
-								<h2 class="post-title">{{ .Title }}</h2>
+								<h2 class="post-title">
+									{{ .Title }}
+									{{ if eq .Params.skip 1 }}
+										<span class="external-icon" style="font-size: 0.8em; margin-left: 4px;">↗</span>
+									{{ end }}
+								</h2>
 							</div>
 
 						</article>
