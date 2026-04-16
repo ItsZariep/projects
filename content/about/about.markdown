@@ -1,5 +1,4 @@
 ---
-layout: post
 type: "page"
 title: About me
 author: ItsZariep

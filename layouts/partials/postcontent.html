@@ -1,49 +1,7 @@
-<div class="chapters-container">
+{{ $layout := .Params.layout }}
 
-	<h1>{{ .Title }}</h1>
-
-	{{ if .Params.simple }}
-		<div class="content">
-			{{ .Content }}
-		</div>
-
-	{{ else }}
-		{{ $slug := .File.TranslationBaseName }}
-		{{ $assetPath := printf "/assets/projects/%s" $slug }}
-
-		{{ $heroPath := printf "static%s/%s.webp" $assetPath $slug }}
-		{{ if fileExists $heroPath }}
-			<img class="plogo" src="{{ printf "%s/%s.webp" $assetPath $slug }}" alt="{{ .Title }}">
-		{{ end }}
-
-		{{ if .Params.description }}
-			<div class="description">
-				{{ .Params.description | markdownify }}
-			</div>
-		{{ end }}
-
-		{{ if eq .Params.skip 1 }}
-			{{ partial "redirect.html" . }}
-		{{ else }}
-			
-			{{ partial "badges.html" (dict "Page" . "class" .Params.badges_class "show_releases" .Params.releases) }}
-
-			<hr>
-
-			{{ $galleryDir := printf "static%s/img" $assetPath }}
-			{{ if fileExists $galleryDir }}
-				{{ $files := readDir $galleryDir }}
-				<div class="gallery">
-					{{ range $files }}
-						{{ if not .IsDir }}<img src="{{ printf "%s/img/%s" $assetPath .Name }}" alt="">{{ end }}
-					{{ end }}
-				</div>
-			{{ end }}
-
-			<div class="content">
-				{{ partial "md.html" . }}
-			</div>
-
-		{{ end }}
-	{{ end }}
-</div>
+{{ if eq $layout "post" }}
+	{{ partial "postcontent-blog.html" . }}
+{{ else }}
+	{{ partial "postcontent-projects.html" . }}
+{{ end }}

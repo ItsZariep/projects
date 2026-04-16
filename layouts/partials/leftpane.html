@@ -1,4 +1,15 @@
 <!-- Right Pane -->
 
+{{ $layout := .Params.layout }}
+
+{{ if eq $layout "post" }}
+<div id="left-container" class="">
+<div class="toc">
+	{{ .TableOfContents }}
+</div>
+</div>
+{{ else }}
+
 <div id="left-container" class="hidden">
 </div>
+{{ end }}

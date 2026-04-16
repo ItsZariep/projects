@@ -1,0 +1,8 @@
+{{ define "main" }}
+	<h1 style="text-align: center;">{{ .Title }}</h1>
+	<div id="main-container">
+		{{ partial "leftpane.html" . }}
+		{{ partial "postgrid.html" . }}
+		{{ partial "rightpane.html" . }}
+	</div>
+{{ end }}

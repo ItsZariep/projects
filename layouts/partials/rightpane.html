@@ -1,3 +1,11 @@
+{{ $layout := .Params.layout }}
+
+{{ if eq $layout "post" }}
+<div id="right-container" class="hidden">
+</div>
+{{ else }}
+
+
 <div id="right-container" class="{{ if and (eq .Type "page") (not .IsHome) }}hidden{{ end }}">
 
 	{{ if not (and (eq .Type "page") (not .IsHome)) }}
@@ -17,3 +25,4 @@
 	{{ end }}
 
 </div>
+{{ end }}

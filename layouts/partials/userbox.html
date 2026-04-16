@@ -1,0 +1,18 @@
+<!-- Your personal box at the end of each post -->
+
+{{ $authors := .Params.authors | default (slice .Site.Params.author) }}
+
+<div class="userbox">
+	{{ range $index, $author := $authors }}
+		<div class="author-entry">
+			<img class="userpic" src="{{ (print "/img/authors/" $author ".webp") | relURL }}" alt="Avatar">
+			<div class="userbox-content">
+				<h1>{{ $author }}</h1>
+				<h3>{{ partial "authors.html" (dict "author" $author) }}</h3>
+				<a href="{{ (print "/about/about" ) | relURL }}">About me</a>
+			</div>
+		</div>
+		{{ if lt (add $index 1) (len $authors) }}{{ end }} <br>
+	{{ end }}
+</div>
+

@@ -1,0 +1,49 @@
+
+<div class="post">
+	<!-- Top Categories -->
+	<div class="post-postcategories">
+		<h3>
+			{{ $page := . }}
+			{{ if $page.Params.categories }}
+				{{ range $index, $cat := $page.Params.categories }}
+				<a href="/categories/{{ $cat | urlize }}">{{ $cat }}</a>
+				{{ if ne (add $index 1) (len $page.Params.categories) }} | {{ end }}
+				{{ end }}
+			{{ end }}
+		</h3>
+	</div>
+	<!-- Title -->
+	<div class="post-posttitle">
+		<h1>{{ .Title }}</h1>
+	</div>
+	<!-- Date -->
+	<div class="post-postdate">
+		{{ if .Params.showDate }}
+			<h3>{{ .Date.Format .Site.Params.date_format }}</h3>
+		{{ end }}
+	</div>
+	<!-- Main Content -->
+	<div class="post-postcontent">
+		{{ partial "postmainpicture.html" . }}
+		{{ .Content }}
+	</div>
+	<!-- Bottom Tags -->
+	<div class="post-postcategoriesbottom">
+		<h3>
+		{{ $page := . }}
+		{{ if $page.Params.tags }}
+			{{ range $index, $cat := $page.Params.tags }}
+			<a href="/tags/{{ $cat | urlize }}">{{ $cat }}</a>
+			{{ if ne (add $index 1) (len $page.Params.tags) }} | {{ end }}
+			{{ end }}
+		{{ end }}
+
+		</h3>
+		<a href="#scrolltotop" class="scrolltotop"></a>
+	</div>
+	<hr class="endseparator">
+
+	{{ partial "nextprevious.html" . }}
+	{{ partial "userbox.html" . }}
+	{{ partial "sharebtn.html" . }}
+</div>

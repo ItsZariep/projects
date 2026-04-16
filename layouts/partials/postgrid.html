@@ -1,6 +1,27 @@
 {{ $indextype := .Params.indextype }}
 
-{{ if eq $indextype "chapters" }}
+{{ if eq $indextype "posts" }}
+	<div class="posts-container">
+		{{ $paginator := .Paginate (where .Site.RegularPages "Section" "blog") }}
+		{{ range $paginator.Pages }}
+			<a href="{{ .RelPermalink }}" class="post-link">
+				<article class="post-card">
+					<div class="post-info">
+						<h3 class="post-labels">{{ with .Params.categories }}{{ delimit . " | " }}{{ end }}</h3>
+						<h2 class="post-title">{{ .Title }}</h2>
+						<div class="post-date">{{ .Date.Format .Site.Params.date_format }}</div>
+					</div>
+				</article>
+			</a>
+		{{ end }}
+
+<!--
+		{{ partial "pagination-controls.html" . }}
+-->
+	</div>
+
+{{ else if eq $indextype "chapters" }}
+	{{ $chapters := where .Site.RegularPages "Section" "projects" }}
 	<!-- Chapters section -->
 
 	{{ $chapters := where .Site.RegularPages "Section" "projects" }}
