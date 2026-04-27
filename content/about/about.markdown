@@ -11,7 +11,7 @@ My favorite programming languages are C and C++, and my preferred package manage
 
 Besides programming and operating systems, I really enjoy PC video games.
 
-> You can see the source code of the site and the changes made to the Tessera theme for this site in [the page source code](https://github.com/ItsZariep/pages-hugo).
+> You can see the source code of the site and the changes made to the Tessera theme for this site in [the page source code](https://codeberg.org/ItsZariep/pages-hugo).
 
 ---
 

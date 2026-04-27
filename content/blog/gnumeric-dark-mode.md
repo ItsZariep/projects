@@ -26,7 +26,7 @@ C:\Users\YourUser\AppData\Roaming\gtk-3.0\gtk.css
 
 At the end of the file, add the following:
 
-```
+```css
 /* Cell background */ 
 GnmItemGrid,
 GnmPreviewGrid,
