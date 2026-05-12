@@ -67,7 +67,7 @@
 						<article class="post-card">
 
 							<div class="post-image-wrapper">
-								{{ $slug := .Title | urlize }}
+								{{ $slug := .File.BaseFileName }}
 								{{ $autoImage := printf "/assets/projects/%s/%s.webp" $slug $slug }}
 								{{ $image := .Params.image | default $autoImage }}
 

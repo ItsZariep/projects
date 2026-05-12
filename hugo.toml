@@ -1,5 +1,5 @@
 baseURL = 'https://itszariep.codeberg.page/'
-languageCode = 'en-us'
+locale = 'en-US'
 title = "Zariep's portfolio"
 theme = "Tessera"
 
