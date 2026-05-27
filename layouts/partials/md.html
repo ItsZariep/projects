@@ -1,6 +1,5 @@
 {{ $backend := lower (.Page.Params.RepoBackend | default "codeberg") }}
 {{ $slug := .File.TranslationBaseName }}
-
 {{ $rawURL := "" }}
 {{ if eq $backend "github" }}
 	{{ $rawURL = printf "https://raw.githubusercontent.com/itszariep/%s/main/README.md" $slug }}
@@ -8,9 +7,36 @@
 	{{ $rawURL = printf "https://codeberg.org/api/v1/repos/itszariep/%s/raw/README.md" $slug }}
 {{ end }}
 
-<script type="module" src="https://cdn.jsdelivr.net/npm/zero-md@3?register"></script>
-<zero-md src="{{ $rawURL }}">
-	<template data-append>
-		<link rel="stylesheet" href="{{ "css/md.css" | relURL }}">
-	</template>
-</zero-md>
+<div id="readme-container">
+	<div id="readme-static">
+		{{ .Content }}
+	</div>
+
+	<!-- zero-md is hidden until it's ready -->
+	<zero-md
+		id="readme-live"
+		src="{{ $rawURL }}"
+		style="display: none;"
+	>
+		<template data-append>
+			<link rel="stylesheet" href="{{ "css/md.css" | relURL }}">
+		</template>
+	</zero-md>
+</div>
+
+<script type="module">
+	import 'https://cdn.jsdelivr.net/npm/zero-md@3?register';
+
+	const live = document.getElementById('readme-live');
+	const fallback = document.getElementById('readme-static');
+
+	live.addEventListener('zero-md-rendered', () => {
+		fallback.style.display = 'none';
+		live.style.display = '';
+	}, { once: true });
+
+	// If zero-md errors (e.g. network failure), keep the static fallback
+	live.addEventListener('zero-md-error', () => {
+		live.remove();
+	}, { once: true });
+</script>
