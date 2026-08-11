@@ -7,13 +7,14 @@ theme = "Tessera"
   author = "ItsZariep"
   RepoBackend = "codeberg"
   [[params.social_links]]
-    name = "Codeberg"
-    url = "https://codeberg.org/itszariep"
-
-  [[params.social_links]]
     name = "Ko-fi"
     url = "https://ko-fi.com/itszariep"
-
+  [[params.social_links]]
+    name = "LiberaPay"
+    url = "https://liberapay.com/zariep"
+  [[params.social_links]]
+    name = "Codeberg"
+    url = "https://codeberg.org/itszariep"
   [[params.social_links]]
     name = "Youtube"
     url = "https://youtube.com/@itszariep"

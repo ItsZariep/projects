@@ -9,14 +9,27 @@ description: "Feature-rich Android navigation bar replacement"
 Open source alternative navigation bar for Android.
 
 [![LiberaPay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/zariep/donate)
+<a href='https://ko-fi.com/C0C1MBGAV' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi5.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a> 
 
 ## Download
 
-[![Get It on Codeberg](https://codeberg.org/Codeberg/GetItOnCodeberg/media/branch/main/get-it-on-white-on-black.png)](https://codeberg.org/ItsZariep/OpenNavBar/releases/latest)
+<a href="https://codeberg.org/ItsZariep/OpenNavBar/releases/latest">
+  <img class=".hidden" src="https://codeberg.org/Codeberg/GetItOnCodeberg/media/branch/main/get-it-on-white-on-black.png"
+       alt="Get It on Codeberg"
+       height="60">
+</a>
 
-[![Get it at IzzyOnDroid](https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png)](https://apt.izzysoft.de/packages/com.zariep.opennavbar)
+<a href="https://apt.izzysoft.de/packages/com.zariep.opennavbar">
+  <img class=".hidden" src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png"
+       alt="Get it at IzzyOnDroid"
+       height="60">
+</a>
 
-[![Get it on Obtainium](https://github.com/ImranR98/Obtainium/raw/main/assets/graphics/badge_obtainium.png)](http://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://codeberg.org/itszariep/opennavbar)
+<a href="http://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://codeberg.org/itszariep/opennavbar">
+  <img class=".hidden" src="https://github.com/ImranR98/Obtainium/raw/main/assets/graphics/badge_obtainium.png"
+       alt="Get it on Obtainium"
+       height="60">
+</a>
 
 ## Features
 
@@ -55,6 +68,8 @@ If your device does not have a fully functional navigation bar, follow these ste
 
 # Build
 
+<details>
+
 ## Prerequisites
 
 - **Java Development Kit (JDK):** Version 17
@@ -65,14 +80,15 @@ If your device does not have a fully functional navigation bar, follow these ste
 
 Before you can create a production build, you need a Keystore file (`.jks`). Run the following command in your terminal to generate one:
 
+<details>
 
 ```bash
 keytool -genkey -v -keystore app/my-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias zariep
 
 ```
 
-> [!IMPORTANT]  
-> This command will prompt you for a password. Set a password and keep note of the **Alias** you choose.  
+> [!IMPORTANT]
+> This command will prompt you for a password. Set a password and keep note of the **Alias** you choose.
 
 > The file `my-release-key.jks` will be created in the **root directory**
 
@@ -89,7 +105,9 @@ RELEASE_KEY_ALIAS=zariep
 
 > `local.properties` and `*.jks` are excluded from version control by default
 
-## 3. Build the Program
+</details>
+
+## Build
 
 ### Debug Build (For Development)
 
@@ -114,3 +132,5 @@ To generate the final, optimized, and signed production APK:
 ```
 
 **Output:** `app/build/outputs/apk/release/app-release.apk`
+
+</details>
