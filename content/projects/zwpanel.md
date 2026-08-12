@@ -39,9 +39,6 @@ Lightweight pure wayland (+fcft +pixman +libpng +nanosvg) panel, built on `wlr-l
 - Optional, `ENABLE_PNG=ON` (default): [libpng](http://www.libpng.org/pub/png/libpng.html): PNG icon decoding
 - Optional, `ENABLE_SVG=ON` (default): [NanoSVG](https://github.com/memononen/nanosvg): SVG icon rasterization
 
-<details>
-<summary><strong>Build instructions</strong></summary>
-
 ```bash
 git clone --recursive https://codeberg.org/ItsZariep/zwpanel
 cd zwpanel
@@ -72,8 +69,6 @@ Check what a built binary was compiled with:
 ```bash
 ./build/zwpanel --version
 ```
-
-</details>
 
 ## Configuration
 
