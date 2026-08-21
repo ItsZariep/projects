@@ -21,10 +21,10 @@
 	</div>
 
 {{ else if eq $indextype "chapters" }}
-	{{ $chapters := where .Site.RegularPages "Section" "projects" }}
+	{{ $chapters := where .Site.RegularPages "Section" "p" }}
 	<!-- Chapters section -->
 
-	{{ $chapters := where .Site.RegularPages "Section" "projects" }}
+	{{ $chapters := where .Site.RegularPages "Section" "p" }}
 	{{ $grouped := dict }}
 
 	{{/* Group projects by section */}}
